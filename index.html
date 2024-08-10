@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Simulator</title>
+</head>
+<body>
+    <h1>Bank Account Simulator</h1>
+    <p>Check your browser's console to interact with the bank account simulation.</p>
+
+    <!-- JavaScript code here -->
+    <script>
+        class BankAccount {
+            constructor(balance = 0) {
+                this.balance = balance;
+            }
+
+            deposit(amount) {
+                if (amount > 0) {
+                    this.balance += amount;
+                    console.log(`Deposited $${amount}. New balance: $${this.balance}`);
+                } else {
+                    console.log("Invalid deposit amount.");
+                }
+            }
+
+            withdraw(amount) {
+                if (amount > 0 && amount <= this.balance) {
+                    this.balance -= amount;
+                    console.log(`Withdrew $${amount}. New balance: $${this.balance}`);
+                } else if (amount > this.balance) {
+                    console.log("Insufficient funds.");
+                } else {
+                    console.log("Invalid withdrawal amount.");
+                }
+            }
+
+            getBalance() {
+                console.log(`Your current balance is $${this.balance}`);
+            }
+        }
+
+        function performTransaction(account) {
+            let transactionType = prompt("Would you like to deposit or withdraw? (Enter 'deposit' or 'withdraw')");
+            let amount;
+
+            if (transactionType === "deposit") {
+                amount = parseFloat(prompt("Enter the amount to deposit:"));
+                account.deposit(amount);
+            } else if (transactionType === "withdraw") {
+                amount = parseFloat(prompt("Enter the amount to withdraw:"));
+                account.withdraw(amount);
+            } else {
+                console.log("Invalid transaction type.");
+            }
+
+            account.getBalance();
+
+            let proceed = prompt("Would you like to perform another transaction? (yes/no)");
+            if (proceed.toLowerCase() === "yes") {
+                performTransaction(account);
+            } else {
+                console.log("Thank you for using our service!");
+            }
+        }
+
+        let myAccount = new BankAccount(100); // Starting with $100 in the account
+        performTransaction(myAccount);
+    </script>
+</body>
+</html>
